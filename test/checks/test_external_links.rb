@@ -7,8 +7,8 @@ class Nanoc::Checking::Checks::ExternalLinksTest < Minitest::Test
   def test_run
     # Create files
     FileUtils.mkdir_p('output')
-    File.open('output/foo.txt',  'w') { |io| io.write('<a href="http://example.com/404">broken</a>') }
-    File.write('output/bar.html', '<a href="http://example.com/">not broken</a>')
+    File.open('build/foo.txt',  'w') { |io| io.write('<a href="http://example.com/404">broken</a>') }
+    File.write('build/bar.html', '<a href="http://example.com/">not broken</a>')
 
     # Create check
     check = Nanoc::Checking::Checks::ExternalLinks.new(site_here)

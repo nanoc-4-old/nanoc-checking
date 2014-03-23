@@ -4,7 +4,7 @@ module Nanoc::Checking
 
   class Check
 
-    extend Nanoc::PluginRegistry::PluginMethods
+    extend DDPlugin::Plugin
 
     attr_reader :site
     attr_reader :issues
@@ -24,8 +24,8 @@ module Nanoc::Checking
       @issues << Issue.new(desc, subject, self.class)
     end
 
-    def output_filenames
-      Dir[@site.config[:output_dir] + '/**/*'].select{ |f| File.file?(f) }
+    def build_filenames
+      Dir[@site.config[:build_dir] + '/**/*'].select{ |f| File.file?(f) }
     end
 
   end

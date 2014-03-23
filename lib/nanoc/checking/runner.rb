@@ -30,7 +30,7 @@ module Nanoc::Checking
 
       puts "Available checks:"
       puts
-      puts all_check_classes.map { |i| "  " + i.identifier.to_s }.sort.join("\n")
+      puts all_check_classes.map { |s| "  " + s.to_s }.sort.join("\n")
     end
 
     # Runs all checks.
@@ -95,12 +95,12 @@ module Nanoc::Checking
     end
 
     def all_check_classes
-      Nanoc::Checking::Check.all.map { |p| p.last }.uniq
+      Set.new(Nanoc::Checking::Check.all.flat_map { |klass| klass.identifiers })
     end
 
     def check_classes_named(n)
       classes = n.map do |a|
-        klass = Nanoc::Checking::Check.named(a)
+        klass = Nanoc::Checking::Check.named(a.to_sym)
         raise Nanoc::Errors::GenericTrivial, "Unknown check: #{a}" if klass.nil?
         klass
       end

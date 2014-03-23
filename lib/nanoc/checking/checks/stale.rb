@@ -33,7 +33,7 @@ module Nanoc::Checking::Checks
       compiler.build_reps
       compiler.item_rep_store.reps.
         flat_map { |r| r.paths_without_snapshot }.
-        map { |r| File.join(@site.config[:output_dir], r) }
+        map { |r| File.join(@site.config[:build_dir], r) }
     end
 
     def pruner

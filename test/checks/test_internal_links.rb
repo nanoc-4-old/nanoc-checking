@@ -7,9 +7,9 @@ class Nanoc::Checking::Checks::InternalLinksTest < Minitest::Test
   def test_run
     # Create files
     FileUtils.mkdir_p('output')
-    FileUtils.mkdir_p('output/stuff')
-    File.open('output/foo.txt',  'w') { |io| io.write('<a href="/broken">broken</a>') }
-    File.write('output/bar.html', '<a href="/foo.txt">not broken</a>')
+    FileUtils.mkdir_p('build/stuff')
+    File.open('build/foo.txt',  'w') { |io| io.write('<a href="/broken">broken</a>') }
+    File.write('build/bar.html', '<a href="/foo.txt">not broken</a>')
 
     # Create check
     check = Nanoc::Checking::Checks::InternalLinks.new(site_here)
@@ -22,31 +22,31 @@ class Nanoc::Checking::Checks::InternalLinksTest < Minitest::Test
   def test_valid?
     # Create files
     FileUtils.mkdir_p('output')
-    FileUtils.mkdir_p('output/stuff')
-    File.open('output/origin',     'w') { |io| io.write('hi') }
-    File.open('output/foo',        'w') { |io| io.write('hi') }
-    File.write('output/stuff/blah', 'hi')
+    FileUtils.mkdir_p('build/stuff')
+    File.open('build/origin',     'w') { |io| io.write('hi') }
+    File.open('build/foo',        'w') { |io| io.write('hi') }
+    File.write('build/stuff/blah', 'hi')
 
     # Create check
     check = Nanoc::Checking::Checks::InternalLinks.new(site_here)
 
     # Test
-    assert check.send(:valid?, 'foo',         'output/origin')
-    assert check.send(:valid?, 'origin',      'output/origin')
-    assert check.send(:valid?, 'stuff/blah',  'output/origin')
-    assert check.send(:valid?, '/foo',        'output/origin')
-    assert check.send(:valid?, '/origin',     'output/origin')
-    assert check.send(:valid?, '/stuff/blah', 'output/origin')
+    assert check.send(:valid?, 'foo',         'build/origin')
+    assert check.send(:valid?, 'origin',      'build/origin')
+    assert check.send(:valid?, 'stuff/blah',  'build/origin')
+    assert check.send(:valid?, '/foo',        'build/origin')
+    assert check.send(:valid?, '/origin',     'build/origin')
+    assert check.send(:valid?, '/stuff/blah', 'build/origin')
   end
 
   def test_remove_query_string
-    FileUtils.mkdir_p('output/stuff')
-    File.write('output/stuff/right', 'hi')
+    FileUtils.mkdir_p('build/stuff')
+    File.write('build/stuff/right', 'hi')
 
     check = Nanoc::Checking::Checks::InternalLinks.new(site_here)
 
-    assert check.send(:valid?, 'stuff/right?foo=123', 'output/origin')
-    refute check.send(:valid?, 'stuff/wrong?foo=123', 'output/origin')
+    assert check.send(:valid?, 'stuff/right?foo=123', 'build/origin')
+    refute check.send(:valid?, 'stuff/wrong?foo=123', 'build/origin')
   end
 
   def test_exclude
@@ -56,19 +56,19 @@ class Nanoc::Checking::Checks::InternalLinksTest < Minitest::Test
     check = Nanoc::Checking::Checks::InternalLinks.new(site_here)
 
     # Test
-    assert check.send(:valid?, '/excluded1', 'output/origin')
-    assert check.send(:valid?, '/excluded2', 'output/origin')
-    assert !check.send(:valid?, '/excluded_not', 'output/origin')
+    assert check.send(:valid?, '/excluded1', 'build/origin')
+    assert check.send(:valid?, '/excluded2', 'build/origin')
+    assert !check.send(:valid?, '/excluded_not', 'build/origin')
   end
 
   def test_unescape_url
-    FileUtils.mkdir_p('output/stuff')
-    File.write('output/stuff/right foo', 'hi')
+    FileUtils.mkdir_p('build/stuff')
+    File.write('build/stuff/right foo', 'hi')
 
     check = Nanoc::Checking::Checks::InternalLinks.new(site_here)
 
-    assert check.send(:valid?, 'stuff/right%20foo', 'output/origin')
-    refute check.send(:valid?, 'stuff/wrong%20foo', 'output/origin')
+    assert check.send(:valid?, 'stuff/right%20foo', 'build/origin')
+    refute check.send(:valid?, 'stuff/wrong%20foo', 'build/origin')
   end
 
 end

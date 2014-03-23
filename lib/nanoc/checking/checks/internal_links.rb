@@ -17,7 +17,7 @@ module Nanoc::Checking::Checks
     # @return [void]
     def run
       # TODO de-duplicate this (duplicated in external links check)
-      filenames = self.output_filenames.select { |f| File.extname(f) == '.html' }
+      filenames = self.build_filenames.select { |f| File.extname(f) == '.html' }
       hrefs_with_filenames = ::Nanoc::Checking::LinkCollector.new(filenames, :internal).filenames_per_href
       hrefs_with_filenames.each_pair do |href, filenames|
         filenames.each do |filename|
@@ -53,7 +53,7 @@ module Nanoc::Checking::Checks
 
       # Make absolute
       if path[0, 1] == '/'
-        path = @site.config[:output_dir] + path
+        path = @site.config[:build_dir] + path
       else
         path = ::File.expand_path(path, ::File.dirname(origin))
       end

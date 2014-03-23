@@ -6,11 +6,11 @@ class Nanoc::Checking::CheckTest < Minitest::Test
 
   include TestHelper
 
-  def test_output_filenames
+  def test_build_filenames
     check = Nanoc::Checking::Check.new(Nanoc::SiteLoader.new.load)
-    assert check.output_filenames.empty?
-    File.open('output/foo.html', 'w') { |io| io.write 'hello' }
-    assert_equal [ 'output/foo.html' ], check.output_filenames
+    assert check.build_filenames.empty?
+    File.open('build/foo.html', 'w') { |io| io.write 'hello' }
+    assert_equal [ 'build/foo.html' ], check.build_filenames
   end
 
 end

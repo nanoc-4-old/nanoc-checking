@@ -13,7 +13,7 @@ class Nanoc::Checking::CommandTest < Minitest::Test
     end
 
     # Should raise now
-    File.open('output/blah.html', 'w') { |io| io.write 'moo' }
+    File.open('build/blah.html', 'w') { |io| io.write 'moo' }
     capturing_stdio do
       assert_raises Nanoc::Errors::GenericTrivial do
         Nanoc::CLI.run %w( check stale )

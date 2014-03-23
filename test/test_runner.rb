@@ -7,7 +7,7 @@ class Nanoc::Checking::RunnerTest < Minitest::Test
   include TestHelper
 
   def test_run_specific
-    File.write('output/blah', 'I am stale! Haha!')
+    File.write('build/blah', 'I am stale! Haha!')
     runner = Nanoc::Checking::Runner.new(Nanoc::SiteLoader.new.load)
     capturing_stdio do
       runner.run_specific(%w( stale ))

@@ -9,7 +9,7 @@ module Nanoc::Checking::Checks
     def run
       require 'w3c_validators'
 
-      Dir[site.config[:output_dir] + '/**/*.css'].each do |filename|
+      Dir[site.config[:build_dir] + '/**/*.css'].each do |filename|
         results = ::W3CValidators::CSSValidator.new.validate_file(filename)
         results.errors.each do |e|
           desc = e.message.gsub(%r{\s+}, ' ').strip

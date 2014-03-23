@@ -6,8 +6,8 @@ class Nanoc::Checking::Checks::CSSTest < Minitest::Test
 
   def test_run_ok
     # Create files
-    File.write('output/blah.html', '<h1>Hi!</h1>')
-    File.write('output/style.css', 'h1 { color: red; }')
+    File.write('build/blah.html', '<h1>Hi!</h1>')
+    File.write('build/style.css', 'h1 { color: red; }')
 
     # Run check
     check = Nanoc::Checking::Checks::CSS.new(site_here)
@@ -19,8 +19,8 @@ class Nanoc::Checking::Checks::CSSTest < Minitest::Test
 
   def test_run_error
     # Create files
-    File.write('output/blah.html', '<h1>Hi!</h1>')
-    File.write('output/style.css', 'h1 { coxlor: rxed; }')
+    File.write('build/blah.html', '<h1>Hi!</h1>')
+    File.write('build/style.css', 'h1 { coxlor: rxed; }')
 
     # Run check
     check = Nanoc::Checking::Checks::CSS.new(site_here)
