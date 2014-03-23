@@ -1,4 +1,4 @@
-# nanoc-check news
+# nanoc-checking news
 
 ## 1.0.0
 

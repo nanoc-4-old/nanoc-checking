@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files              = Dir['[A-Z]*'] +
                          Dir['{lib,test}/**/*'] +
-                         [ 'nanoc-check.gemspec' ]
+                         [ 'nanoc-checking.gemspec' ]
   s.require_paths      = [ 'lib' ]
 
   s.rdoc_options     = [ '--main', 'README.md' ]
