@@ -102,12 +102,7 @@ module Nanoc::Checking::Checks
       res = nil
       5.times do |i|
         begin
-          Timeout::timeout(10) do
-            res = request_url_once(url)
-            if res.code == '405'
-              res = request_url_once(url, Net::HTTP::Get)
-            end
-          end
+          res = smart_request_url_once(url)
         rescue => e
           return Result.new(href, e.message)
         end
@@ -151,6 +146,16 @@ module Nanoc::Checking::Checks
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       res = http.request(req)
+    end
+
+    def smart_request_url_once(url)
+      Timeout.timeout(10) do
+        res = request_url_once(url)
+        if res.code == '405'
+          res = request_url_once(url, Net::HTTP::Get)
+        end
+        res
+      end
     end
 
     def resolve_redirect(original_url, location)

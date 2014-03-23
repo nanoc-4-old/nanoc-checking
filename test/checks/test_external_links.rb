@@ -82,4 +82,24 @@ class Nanoc::Checking::Checks::ExternalLinksTest < Minitest::Test
       check.resolve_redirect(URI.parse('http://example.com/foo'), '/bar')
   end
 
+  def test_smart_request_url_once_bad_request
+    check = Nanoc::Checking::Checks::ExternalLinks.new(site_here)
+    def check.request_url_once(url, method=:default)
+      @num ||= 0
+      orig_num = @num
+      @num += 1
+
+      case orig_num
+      when 0
+        Net::HTTPResponse.new('1.1', '405', 'your method sucks')
+      when 1
+        Net::HTTPResponse.new('1.1', '200', 'your method is not bad')
+      end
+    end
+
+    res = check.smart_request_url_once(URI.parse('http://example.com'))
+
+    assert_equal '200', res.code
+  end
+
 end
