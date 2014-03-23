@@ -3,6 +3,15 @@
 require 'bundler'
 Bundler.setup
 
+# Setup code coverage
+require 'simplecov'
+require 'coveralls'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter,
+]
+SimpleCov.start
+
 require 'minitest'
 require 'minitest/autorun'
 require 'nanoc-core'
