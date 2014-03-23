@@ -117,15 +117,7 @@ module Nanoc::Checking::Checks
             return Result.new(href, 'too many redirects')
           end
 
-          # Find proper location
-          location = res['Location']
-          if location !~ /^https?:\/\//
-            base_url = url.dup
-            base_url.path = (location =~ /^\// ? '' : '/')
-            base_url.query = nil
-            base_url.fragment = nil
-            location = base_url.to_s + location
-          end
+          location = resolve_redirect(url, res['Location'])
 
           url = URI.parse(location)
         elsif res.code == '200'
@@ -159,6 +151,19 @@ module Nanoc::Checking::Checks
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       res = http.request(req)
+    end
+
+    def resolve_redirect(original_url, location)
+      if location =~ /^https?:\/\//
+        location
+      else
+        base_url = original_url.dup
+        base_url.path = (location =~ /^\// ? '' : '/')
+        base_url.query = nil
+        base_url.fragment = nil
+
+        base_url.to_s + location
+      end
     end
 
   end

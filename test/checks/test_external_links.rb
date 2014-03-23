@@ -68,4 +68,18 @@ class Nanoc::Checking::Checks::ExternalLinksTest < Minitest::Test
     assert_equal '/meow?foo=bar', check.send(:path_for_url, URI.parse('http://example.com/meow?foo=bar'))
   end
 
+  def test_resolve_redirect
+    check = Nanoc::Checking::Checks::ExternalLinks.new(site_here)
+
+    assert_equal 'http://example.com/bar',
+      check.resolve_redirect(URI.parse('http://example.com/foo'), 'http://example.com/bar')
+  end
+
+  def test_resolve_hostless_redirect
+    check = Nanoc::Checking::Checks::ExternalLinks.new(site_here)
+
+    assert_equal 'http://example.com/bar',
+      check.resolve_redirect(URI.parse('http://example.com/foo'), '/bar')
+  end
+
 end
