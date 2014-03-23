@@ -1,0 +1,52 @@
+GIT
+  remote: git://github.com/nanoc/nanoc-cli.git
+  revision: 02f6e5f4c2d86773b73d19ad593107bcad117550
+  specs:
+    nanoc-cli (4.0.0a1)
+      cri (~> 2.3)
+      nanoc-core (~> 4.0.0a1)
+
+GIT
+  remote: git://github.com/nanoc/nanoc-core.git
+  revision: 49f41ea16794ab7a0ab3cf412a2a5d9c5a1a21e5
+  specs:
+    nanoc-core (4.0.0a1)
+      ddplugin
+
+PATH
+  remote: .
+  specs:
+    nanoc-checking (1.0.0)
+      colored
+      nanoc-cli
+      nanoc-core
+      nokogiri
+      w3c_validators
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colored (1.2)
+    cri (2.5.0)
+      colored (>= 1.2)
+    ddplugin (0.1)
+    json (1.8.1)
+    mini_portile (0.5.2)
+    minitest (5.3.1)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
+    rake (10.1.1)
+    w3c_validators (1.2)
+      json
+      nokogiri
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  minitest
+  nanoc-checking!
+  nanoc-cli!
+  nanoc-core!
+  rake
